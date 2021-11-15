@@ -7,7 +7,8 @@ class BiteBot:
         'training' : 'https://s3-br.bitefight.gameforge.com:443/profile/training/',
         'token'    : 'https://s3-br.bitefight.gameforge.com/profile/index',
         'grotte' : 'https://s3-br.bitefight.gameforge.com:443/city/grotte/',
-        'humanhunt' : 'https://s3-br.bitefight.gameforge.com/robbery/humanhunt/'
+        'humanhunt' : 'https://s3-br.bitefight.gameforge.com/robbery/humanhunt/',
+        'church' : 'https://s3-br.bitefight.gameforge.com/city/church'
     }
 
     BASE_HEADERS = {
@@ -174,3 +175,12 @@ class BiteBot:
 
             self.train(skill)
             time.sleep(1)
+
+    def getChurchHealPrice(self):
+        res = self.request(self.URL_MAP['church'])
+
+        soup = BeautifulSoup(res.text, 'html.parser')
+        heal_info = re.findall('[0-9]+', soup.find(string = re.compile('vitalidade por')).strip())
+        heal_price = int(heal_info[1])
+
+        return {'price': heal_price, 'token' : self.extractToken(res.text)}
