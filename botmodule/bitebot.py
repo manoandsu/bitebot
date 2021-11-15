@@ -69,18 +69,20 @@ class BiteBot:
 
         if res.status_code != 200:
             print("well we're fucked", res.status_code)
-            return
+            return False
         
-        s = res.text.find('token=')
+        return self.extractToken(res.text)
+
+    def extractToken(self, data):
+        s = data.find('token=')
     
         if s == -1:
-            print("token not found", res.status_code)
-            return
+            return False
 
         s += 6
-        e = res.text[s:].find('"')
+        e = data[s:].find('"')
 
-        return res.text[s:s+e]
+        return data[s:s+e]
 
     def _saveHTML(self, name, text):
         with open(f'{name}.html', 'w', encoding='utf-8') as f:
@@ -172,17 +174,3 @@ class BiteBot:
 
             self.train(skill)
             time.sleep(1)
-
-
-        
-
-#bot = BiteBot()
-#bot.getCharacterInfo()
-
-
-#skill = 1
-#for i in range(50):
-    #print('Hunting', bot.hunt(1))
-    #bot.train(skill)
-    #skill = 3 if skill+1 == 5 else skill+1
-    #time.sleep(1)
