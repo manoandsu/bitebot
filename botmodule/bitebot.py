@@ -186,7 +186,12 @@ class BiteBot:
 
         return {'price': heal_price, 'token' : self.extractToken(res.text)}
 
+    def churchHeal(self, token):
+        res = self.request(f'{self.URL_MAP["church"]}?__token={token}', form_data={'heal': 'Curar'})
+
+        return res.status_code == 200
+
     def graveyardWork(self, hours):
-        res = self.request(f'{self.URL_MAP["graveyard"]}?__token={self.getToken()}', form_data={'workDuration': f'{hours}', 'doWork':'Ir!'})
+        res = self.request(f'{self.URL_MAP["graveyard"]}?__token={self.getToken()}', form_data={'workDuration': f'{hours}', 'dowork':'Ir!'})
 
         return res.status_code == 200
