@@ -197,3 +197,8 @@ class BiteBot:
         res = self.request(f'{self.URL_MAP["graveyard"]}?__token={self.getToken()}', form_data={'workDuration': f'{hours}', 'dowork':'Ir!'})
 
         return res.status_code == 200
+
+    def isWorking(self):
+        res = self.request(f'{self.URL_MAP["graveyard"]}')
+
+        return res.text.find('trabalho restante') != -1
