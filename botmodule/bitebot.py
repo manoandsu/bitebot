@@ -49,13 +49,14 @@ class BiteBot:
 
         self.loggedIn = self.isLoggedIn()
 
+        if self.loggedIn == False:
+            print(f'Trying to log into [{self.user}].')
+
         while self.loggedIn == False:
             res = self.request(self.URL_MAP['login'], form_data = body)
             self.loggedIn = self.isLoggedIn()     
             time.sleep(5)
 
-        print(f'Tried logging in to [{self.user}].')
-        
         return self.loggedIn
         
     def isLoggedIn(self):
