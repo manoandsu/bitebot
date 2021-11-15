@@ -8,7 +8,8 @@ class BiteBot:
         'token'    : 'https://s3-br.bitefight.gameforge.com/profile/index',
         'grotte' : 'https://s3-br.bitefight.gameforge.com:443/city/grotte/',
         'humanhunt' : 'https://s3-br.bitefight.gameforge.com/robbery/humanhunt/',
-        'church' : 'https://s3-br.bitefight.gameforge.com/city/church'
+        'church' : 'https://s3-br.bitefight.gameforge.com/city/church',
+        'graveyard' : 'https://s3-br.bitefight.gameforge.com/city/graveyard/'
     }
 
     BASE_HEADERS = {
@@ -184,3 +185,8 @@ class BiteBot:
         heal_price = int(heal_info[1])
 
         return {'price': heal_price, 'token' : self.extractToken(res.text)}
+
+    def graveyardWork(self, hours):
+        res = self.request(f'{self.URL_MAP["graveyard"]}?__token={self.getToken()}', form_data={'workDuration': f'{hours}', 'doWork':'Ir!'})
+
+        return res.status_code == 200
